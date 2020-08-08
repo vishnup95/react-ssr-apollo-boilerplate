@@ -3,6 +3,7 @@ import { jsx, css } from '@emotion/core';
 import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+import { Helmet } from 'react-helmet';
 import { User } from '../../../graphql/types';
 
 const DISPLAY_USERS = gql`
@@ -63,8 +64,13 @@ const Users = () => {
 };
 
 const HomePage = () => {
+  const { data } = useQuery<Response>(DISPLAY_USERS);
+
   return (
     <div css={styles.container}>
+      <Helmet>
+        <title>{data ? data.users[0].name : 'example'}</title>
+      </Helmet>
       <h1>Home Page</h1>
       <Link to="/about" css={styles.link}>
         Go to About Page

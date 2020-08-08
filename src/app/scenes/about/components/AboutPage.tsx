@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const styles = {
   container: css`
@@ -25,6 +26,10 @@ const styles = {
 const AboutPage = () => {
   return (
     <div css={styles.container}>
+      <Helmet>
+        <title>Hello, World! This is the about page!</title>
+        <meta name="description" content="hello, meta!" />
+      </Helmet>
       <h1>About Page</h1>
       <Link to="/" css={styles.link}>
         Go to Home Page

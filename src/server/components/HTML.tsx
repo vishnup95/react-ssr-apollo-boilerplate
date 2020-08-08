@@ -4,9 +4,10 @@ type Props = {
   children: any;
   scripts: string[];
   initialApolloState: string;
+  helmet: any;
 };
 
-const HTML = ({ children, scripts = [], initialApolloState }: Props) => (
+const HTML = ({ children, scripts = [], initialApolloState, helmet }: Props) => (
   <html lang="">
     <head>
       <meta charSet="utf-8" />
@@ -15,7 +16,8 @@ const HTML = ({ children, scripts = [], initialApolloState }: Props) => (
         href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
         rel="stylesheet"
       />
-      <title>React SSR Apollo</title>
+      {helmet.title.toString()}
+      {helmet.meta.toString()}
       <script
         dangerouslySetInnerHTML={{
           __html: `window.__APOLLO_STATE__ = ${initialApolloState}`,
@@ -25,9 +27,9 @@ const HTML = ({ children, scripts = [], initialApolloState }: Props) => (
     <body>
       {/* eslint-disable-next-line react/no-danger */}
       <div id="app" dangerouslySetInnerHTML={{ __html: children }} />
-      {scripts.filter(Boolean).map((src) => (
-        <script key={src} src={src} />
-      ))}
+      {scripts.filter(Boolean).map((src) => {
+        return <script key={src} src={src} />;
+      })}
     </body>
   </html>
 );

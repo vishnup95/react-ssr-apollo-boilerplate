@@ -23,6 +23,7 @@ module.exports = {
       // which require us to include their own css would not work properly
       whitelist: /\.css$/,
     }),
+    'react-helmet',
   ],
   output: {
     path: paths.serverBuild,

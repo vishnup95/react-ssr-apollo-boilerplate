@@ -27,6 +27,7 @@
     "@apollo/react-hooks": "^3.1.2",
     "@apollo/react-ssr": "^3.1.2",
     "@emotion/core": "^10.0.21",
+    "@types/react-helmet": "^6.1.0",
     "apollo-boost": "^0.4.4",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
@@ -46,6 +47,7 @@
     "node-fetch": "^2.6.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-helmet": "^6.1.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "serve-static": "^1.13.2"
