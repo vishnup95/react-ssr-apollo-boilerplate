@@ -2,12 +2,13 @@ import React from 'react';
 
 type Props = {
   children: any;
+  helmetContext: any;
   scripts: string[];
   initialApolloState: string;
   helmet: any;
 };
 
-const HTML = ({ children, scripts = [], initialApolloState, helmet }: Props) => (
+const HTML = ({ children, scripts = [], initialApolloState, helmetContext: { helmet } }: Props) => (
   <html lang="">
     <head>
       <meta charSet="utf-8" />
@@ -16,8 +17,11 @@ const HTML = ({ children, scripts = [], initialApolloState, helmet }: Props) => 
         href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
         rel="stylesheet"
       />
-      {helmet.title.toString()}
-      {helmet.meta.toString()}
+      {helmet.base.toComponent()}
+      {helmet.title.toComponent()}
+      {helmet.meta.toComponent()}
+      {helmet.link.toComponent()}
+      {helmet.script.toComponent()}
       <script
         dangerouslySetInnerHTML={{
           __html: `window.__APOLLO_STATE__ = ${initialApolloState}`,

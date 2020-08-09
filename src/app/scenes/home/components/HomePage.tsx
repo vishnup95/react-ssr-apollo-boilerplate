@@ -1,58 +1,24 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import React from 'react';
+import { jsx } from '@emotion/core';
 import { Link } from 'react-router-dom';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
+
 import { User } from '../../../graphql/types';
-
-const DISPLAY_USERS = gql`
-  {
-    users {
-      id
-      name
-      email
-    }
-  }
-`;
-
-type Response = {
-  users: User[];
-};
-
-const styles = {
-  container: css`
-    background-color: transparent;
-    padding: 20px;
-    font-family: 'Open Sans';
-  `,
-  link: css`
-    text-decoration: none;
-    font-weight: 900;
-  `,
-  buttonContainer: css`
-    margin-top: 20px;
-  `,
-  articleContainer: css`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 20px;
-  `,
-  articleTitle: css`
-    text-decoration: none;
-    line-height: 30px;
-  `,
-};
+import { UsersQuery } from './HomePage.gql';
+import { GqlResponse } from './HomePage.types';
+import styles from './HomePage.styles';
 
 const Users = () => {
-  const { loading, error, data } = useQuery<Response>(DISPLAY_USERS);
+  const { loading, error, data } = useQuery<GqlResponse>(UsersQuery);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return data ? (
     <div css={styles.articleContainer}>
-      {data.users.map(({ name, email }: User) => (
+      {data.users.data.map(({ name, email }: User) => (
         <div key={name}>
           {name} : {email}
         </div>
@@ -67,16 +33,20 @@ const HomePage = () => {
   const { data } = useQuery<Response>(DISPLAY_USERS);
 
   return (
-    <div css={styles.container}>
+    <React.Fragment>
       <Helmet>
-        <title>{data ? data.users[0].name : 'example'}</title>
+        <title>Home page</title>
       </Helmet>
-      <h1>Home Page</h1>
-      <Link to="/about" css={styles.link}>
-        Go to About Page
-      </Link>
-      <div css={styles.buttonContainer}>{Users()}</div>
-    </div>
+      <div css={styles.container}>
+        <h1>Home Page</h1>
+        <Link to="/about" css={styles.link}>
+          Go to About Page
+        </Link>
+        <div css={styles.buttonContainer}>
+          <Users />
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 
